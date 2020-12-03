@@ -10,7 +10,7 @@ from math import sqrt, floor
 gpx_file = open('gpxfiles/Bournemouth_Half.gpx', 'r')
 
 gpx = gpxpy.parse(gpx_file)
-print (len(gpx.tracks))
+
 
 track = gpx.tracks[0]
 segment = track.segments[0]
@@ -65,7 +65,7 @@ print('Total time : ', floor(sum(timeDif)/60), 'min', int(sum(timeDif)%60), 'sec
 
 gain = sum([x for x in df['elevDif'] if x>0])
 print('Gain = {0}'.format(gain))
-#print(df)
+print(df)
 plt.plot(df['long'], df['lat'])
 plt.title('Plot', fontsize=14)
 plt.xlabel('long', fontsize=14)
@@ -73,7 +73,7 @@ plt.ylabel('lat', fontsize=14)
 plt.grid(False)
 
 plt.savefig('Plot.png')
-#plt.show()
+plt.show()
 
 plt.plot(df['distHav3D'], df['elev'])
 plt.title('Elevation', fontsize=14)
@@ -82,7 +82,7 @@ plt.ylabel('Elevation', fontsize=14)
 plt.grid(False)
 
 plt.savefig('Elevation.png')
-#plt.show()
+plt.show()
 
 averagePace = sum(df['pace']/ len (df['pace']))
 averagePaceMins = floor(averagePace)
