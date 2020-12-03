@@ -7,7 +7,8 @@ import pandas as pd
 import haversine
 from math import sqrt, floor
 
-gpx_file = open('gpxfiles/Bournemouth_Half.gpx', 'r')
+#gpx_file = open('gpxfiles/Bournemouth_Half.gpx', 'r')
+gpx_file = open('gpxfiles/Manchester_Marathon.gpx', 'r')
 
 gpx = gpxpy.parse(gpx_file)
 
@@ -35,6 +36,8 @@ distDifHav2D = [0]
 #distanceHav2D = [0]
 pace = [0]
 
+
+#applying haversine function for each gpx point
 for index in range(1, len(points)):
     start = points[index-1]
     stop = points[index]
@@ -51,7 +54,7 @@ for index in range(1, len(points)):
     distHav.append(distHav[-1] + distanceHav3D)
     pace.append(16.66667/ (distanceHav3D / timeDelta))
 
-
+#adding data to the data frame
 df['distHave2D']= distHavNoElev
 df['distHav3D'] = distHav
 df['elevDif'] = elevDif
@@ -63,6 +66,7 @@ print('Haversine 3D : ', distHav[-1], 'm')
 print('Total time : ', floor(sum(timeDif)/60), 'min', int(sum(timeDif)%60), 'sec')
 #print('Pace : ', 16.666667 / pace, 'min/km')
 
+#map plot
 gain = sum([x for x in df['elevDif'] if x>0])
 print('Gain = {0}'.format(gain))
 print(df)
@@ -75,6 +79,7 @@ plt.grid(False)
 plt.savefig('Plot.png')
 plt.show()
 
+#elevation graph
 plt.plot(df['distHav3D'], df['elev'])
 plt.title('Elevation', fontsize=14)
 plt.xlabel('Distance', fontsize=14)
@@ -84,6 +89,7 @@ plt.grid(False)
 plt.savefig('Elevation.png')
 plt.show()
 
+#average pace
 averagePace = sum(df['pace']/ len (df['pace']))
 averagePaceMins = floor(averagePace)
 averagePaceSecs = int(60 * (averagePace - averagePaceMins))
